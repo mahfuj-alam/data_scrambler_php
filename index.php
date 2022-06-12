@@ -1,15 +1,6 @@
 <?php
 include_once "data.php";
-$mode = 'encode';
-if (isset($_GET['task'])&& $_GET['task']!=''){
-    $mode = $_GET['task'];
-}
-$key = 'abcdefghijklmnopqrstuvwxyz1234567890';
-if('key' == $mode){
-    $keyOriginal = str_split($key);
-    shuffle($keyOriginal);
-    $key = join('', $keyOriginal);
-}
+include_once "functions.php"
 
 ?>
 <!DOCTYPE html>
@@ -46,13 +37,13 @@ if('key' == $mode){
         </div>
         <div class="row">
             <div class="column column-60 column-offset-20">
-                <form action="" method="post">
+                <form action="index.php <?php if('decode'==$task){echo "?$task=decode";}?>" method="post">
                     <label for="key">Key</label>
                     <input type="text" name="key" id="key" <?php displayKey($key)?>>
                     <label for="data">Data</label>
-                    <textarea name="data" id="data" cols="30" rows="50" style="height:200px"></textarea>
+                    <textarea name="data" id="data" cols="30" rows="50" style="height:200px"><?php if(isset($_POST['data'])){echo $_POST['data'];}?></textarea>
                     <label for="result">Result</label>
-                    <textarea name="result" id="result" cols="30" rows="10" style="height:200px"></textarea>
+                    <textarea name="result" id="result" cols="30" rows="10" style="height:200px" ><?php echo $encodedData;?></textarea>
                     <button type="submit">Do It for Me</button>
                 </form>
             </div>
